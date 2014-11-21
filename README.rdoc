@@ -1,14 +1,8 @@
-== Rails Authentication API - Starter Kit
+== Q-Auth
 
-We end up creating user model, its validations and registration / sign in APIs for every project. This is an attempt to create a starter kit.
+Q-Auth is an application for managing the users in an organisation. It has an admin module and an API which can be used by other services to addon functionalities.
 
-Few thoughts:
-
-* Devise is an alternative for those who dont want just an API!. I like gems like devise for the reason that it ease development and reduces the time to kick start a project. At the same time it masks many things from a developers. Authentication with rails is pretty easy with the rails methods like authenticate_with_http_token
-
+* Uses rails methods like authenticate_with_http_token instead of popular methods like devise
 * q-auth-api uses warden for authentication. (This might change in future)
-
 * Uses a Global Configuration for named ConfigCenter
-
-* Currently working on a client to demonstrate the API usage.
 
