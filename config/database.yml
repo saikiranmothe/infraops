@@ -1,0 +1,20 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  reconnect: false
+  database: q_auth_api_development
+  pool: 5
+  username: kvarma
+  host: localhost
+  port: 5432
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  reconnect: false
+  database: q_auth_api_test_<%= ENV['TEST_ENV_NUMBER'] %>
+  pool: 5
+  username: kvarma
+  host: localhost
+  port: 5432
+
