@@ -15,6 +15,74 @@ QAuth::Application.routes.draw do
   # My Profile
   put    '/api/v1/my_profile'  =>  "api/v1/my_profile#update",  :as => :my_profile
 
+  # ----------------------------
+  # Doorkeeper - Oauth Provider
+  # ----------------------------
+
+  use_doorkeeper
+
+  # ------------
+  # Public pages
+  # ------------
+
+  root :to => 'public/user_sessions#sign_in'
+
+  # Sign In URLs for users
+  get     '/sign_in',         to: "public/user_sessions#sign_in",         as:  :user_sign_in
+  post    '/create_session',  to: "public/user_sessions#create_session",  as:  :create_user_session
+
+  # Logout Url
+  delete  '/sign_out' ,       to: "public/user_sessions#sign_out",        as:  :user_sign_out
+
+  # ------------
+  # Admin pages
+  # ------------
+
+  namespace :admin do
+
+    resources :users do
+      get :change_status, on: :member
+    end
+
+    resources :projects do
+      get :change_status, on: :member
+      resources :roles, :only=>[:new, :create, :destroy]
+      resources :project_links
+    end
+
+    resources :clients
+    resources :link_types
+    resources :images
+    resources :departments
+    resources :designations
+
+  end
+
+  # ------------
+  # User pages
+  # ------------
+
+  namespace :user do
+    get   '/dashboard',         to: "dashboard#index",   as:  :dashboard # Landing page after sign in
+    get   '/settings',          to: "settings#index",   as:  :settings
+    get   '/profile',           to: "profile#index",   as:  :profile
+  end
+
+  # User Pages for teams and user profiles
+  get   '/team',               to: "user/team#index",   as:  :team
+  get   '/profiles/:username',  to: "user/team#show",    as:  :profile
+
+  # User Pages for projects
+  get   '/projects/:pretty_url/dashboard',   to: "user/projects#show",   as:  :project_dashboard
+
+  ## ----------
+  ## APIs
+  ## ----------
+
+  # Login / Logout
+  post    '/api/v1/sign_in'  =>  "api/v1/sessions#create",  :as => :api_sign_in
+  delete  '/api/v1/sign_out' =>  "api/v1/sessions#destroy", :as => :api_sign_out
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

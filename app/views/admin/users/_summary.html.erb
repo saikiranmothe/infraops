@@ -1,0 +1,10 @@
+
+<%# Displays Total number of items in the system %>
+<%# Display Flash Message if any only in case of ajax request %>
+<% if request.xhr? %>
+	<%= render :partial=>"layouts/common/flash_message" %>
+<% end %>
+
+<div class="box text-color-grey p-80 text-align-center" style="height:200px;">
+  Total Users = <%= User.count %>
+</div>

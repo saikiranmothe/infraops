@@ -1,0 +1,62 @@
+<style type="text/css">
+	.full-profile .avatar {
+		border-radius: 50%;
+		border: 6px solid #ececec;
+		max-width: 260px;
+	}
+
+	.full-profile h1.name {
+		font-weight: 600;
+		color: #000;
+	}
+
+	.full-profile ul li a {
+		color: #4b4b4b;
+	}
+
+</style>
+
+<div class="full-profile">
+
+	<div class="row">
+		<div class="col-md-3">
+			<% if @user.profile_picture %>
+				<img src="<%= @user.profile_picture.image_url %>" class="avatar" alt="">
+			<% else %>
+				<img src="placeholder.it" class="avatar" alt="">
+			<% end %>
+		</div>
+		<div class="col-md-9">
+			<h1 class="name"><%= @user.display_name %></h2>
+			<div class="font-size-16 text-color-gray"><%= @user.display_designation %></div>
+
+	        <% if @user.client %>
+	          <%= link_to @user.client.name, admin_client_path(@user.client), :class=>"font-size-16 text-color-red" %>
+	        <% end %>
+
+	        <% location = @user.display_address %>
+	        <% unless location.blank? %>
+	          <div class="text-color-green font-size-13"><i class="fa fa-map-marker"></i> <%= location %> </div>
+	        <% end %>
+
+			<ul class="options list-inline mt-10">
+				<li style="padding-left:0px;"><a href="#"><i class="fa fa-envelope"></i> <%= @user.email %></a></li>
+				<li><a href="#"><i class="fa fa-phone"></i> <%= @user.phone %></a></li>
+				<li><a href="#"><i class="fa fa-skype"></i> <%= @user.skype %></a></li>
+				<li><a href="#"><i class="fa fa-linkedin"></i> <%= @user.linkedin %></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<% unless @user.linkedin.blank? %>
+	  <div class="panel panel-default mt-30">
+	    <div class="panel-heading"><i class="fa fa-linkedin-square fa-lg"> </i> LinkedIn Profile</div>
+	    <div class="panel-body clearfix">
+	      <script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
+	  <script type="IN/MemberProfile" data-id="http://www.linkedin.com/in/<%= @user.linkedin %>" data-format="inline" data-related="false"></script>
+	    </div>
+	  </div>
+	<% end %>
+
+
+</div>

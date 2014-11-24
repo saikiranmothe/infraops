@@ -1,0 +1,64 @@
+<div class="panel panel-archon mt-10">
+  <div class="panel-heading">
+    <h3 class="panel-title">More Details
+      <span class="pull-right">
+        <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>
+        <a href="#" class="panel-close"><i class="fa fa-times"></i></a>
+      </span>
+    </h3>
+
+  </div>
+  <div class="panel-body clearfix">
+
+    <table class="table table-condensed table-hover table-striped mt-20">
+      <thead>
+        <tr>
+          <th>Sl.</th>
+          <th>Attribute</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <% data_model.class.column_names.each_with_index do |column, index| %>
+          <% next if (column.include?("token") || column.include?("password")) %>
+          <% if column.include?("_id") %>
+            <% assoc_object = data_model.send(column.gsub("_id", "").to_sym) %>
+            <tr class="text-color-gray">
+              <td><%= index + 1 %>.</td>
+              <td class="bold"><%= column.titleize %></td>
+              <% case assoc_object.class.name %>
+              <% when "Designation" %>
+                <td><%= assoc_object.title %></td>
+              <% when "Department" %>
+                <td><%= assoc_object.name %></td>
+              <% else %>
+                <td><%= assoc_object.class %> not recogonized</td>
+              <% end %>
+            </tr>
+          <% else %>
+            <% value = data_model.send(column) %>
+            <tr class="text-color-gray">
+              <td><%= index + 1 %>.</td>
+              <td class="bold"><%= column.titleize %></td>
+              <% case value.class.to_s %>
+              <% when "Time" %>
+                <td><%= display_time(value) %></td>
+              <% else %>
+                <td><%= value.blank? ? "<not set>" : value %></td>
+              <% end %>
+            </tr>
+          <% end %>
+
+        <% end %>
+
+      </tbody>
+    </table>
+
+
+  </div>
+  <div class="panel-footer clearfix">
+    <%= link_to raw("<i class=\"icon-pencil icon-white mr-5\"></i> Edit"), edit_link, :class=>"btn btn-default btn-xs pull-right ml-10", :remote=>true %>
+    <%= link_to raw("<i class=\"icon-remove \"></i> Delete"), delete_link, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"btn btn-danger btn-xs pull-right", :remote=>true %>
+  </div>
+</div>

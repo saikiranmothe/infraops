@@ -1,0 +1,28 @@
+en:
+  forms:
+    created_successfully: "%{item} has been created successfully." 
+    failed_to_create: "Failed to create %{item}." 
+    updated_successfully: "%{item} has been updated successfully." 
+    failed_to_update: "Failed to update %{item}." 
+    removed_successfully: "%{item} has been removed successfully." 
+    failed_to_remove: "Failed to remove %{item}." 
+    no_results_found: "No results found."
+    destroyed_successfully: "%{item} destroyed successfully"
+  authentication:
+    error: "Error!" 
+    success: "Success!" 
+    permission_denied: "Permission Denied: You don't have permission to perform this action" 
+    invalid_token: "Invalid Token: You don't have permission to perform this action" 
+    user_not_found: "Invalid Login" 
+    invalid_login: "Invalid Login" 
+    user_is_pending: "Your account is not yet approved, please contact administrator"
+    user_is_locked: "Your account is locked, please contact administrator"
+    user_is_blocked: "Your account is blocked, please contact administrator"
+    logged_in_successfully: "You have successfully logged in"
+    logged_out_successfully: "You have successfully logged out"
+    login: "Sign in"
+    logout: "Sign out"
+  status:
+    internal_server_error: "500 Something went wrong"
+    forbidden: "403 Permission Denied! You don't have permission to perform this action"
+    not_found: "404 Not Found: We don't have what you are looking for"

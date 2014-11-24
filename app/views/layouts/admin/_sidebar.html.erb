@@ -1,0 +1,61 @@
+<div class="sidebar">
+	<div class="wrapper">
+
+		<%= link_to image_tag("/assets/logo.png", alt: "Q-Auth Logo"), root_path, class: "logo" %>
+
+		<ul class="nav  nav-list">
+
+			<!-- sidebar input search box -->
+			<li class="nav-search">
+				<div class="form-group">
+					<input type="text" class="form-control nav-search" placeholder="Search through site" />
+					<span class="input-icon fui-search"></span>
+				</div>
+			</li>
+
+			<li class="nav-header">Home</li>
+
+			<li class="<%= nav_class("user/dashboard") %>">
+				<%= link_to raw("<i class=\"fa fa-dashboard\"></i> Dashboard"), user_dashboard_path %>
+			</li>
+
+			<li class="<%= nav_class("user/team") %>">
+				<%= link_to raw("<i class=\"fa fa-dashboard\"></i> Team"), team_path %>
+			</li>
+
+			<% if @current_admin %>
+
+				<li class="nav-header">Admin</li>
+
+				<li class="<%= nav_class("admin/users") %>">
+					<%= link_to raw("<i class=\"fa fa-group\"></i> Manage Users"), admin_users_path %>
+				</li>
+
+				<li class="<%= nav_class("admin/departments") %>">
+					<%= link_to raw("<i class=\"fa fa-building\"></i> Manage Departments"), admin_departments_path %>
+				</li>
+
+				<li class="<%= nav_class("admin/designations") %>">
+					<%= link_to raw("<i class=\"fa fa-user-md\"></i> Manage Designations"), admin_designations_path %>
+				</li>
+
+			<% end %>
+
+			<li class="nav-header">Account</li>
+
+			<li class="<%= nav_class("account/profile") %>">
+				<%= link_to raw("<i class=\"fa fa-user\"></i> My Profile"), user_profile_path %>
+			</li>
+
+			<li class="<%= nav_class("account/settings") %>">
+				<%= link_to raw("<i class=\"fa fa-cogs avatar\"></i> Account Settings"), user_settings_path %>
+			</li>
+
+			<li>
+				<%= link_to raw("<i class=\"fa fa-power-off\"></i> Sign Out"), user_sign_out_path, :method => :delete %>
+			</li>
+
+		</ul>
+
+	</div><!-- /Wrapper -->
+</div><!-- /Sidebar -->

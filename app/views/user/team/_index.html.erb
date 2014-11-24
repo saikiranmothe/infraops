@@ -1,0 +1,50 @@
+<h3 class="pb-10" style="border-bottom:1px solid #898989;"> Qwinix Team </h3>
+
+<% @users.each do |user| %>
+  <div class="pull-left" style="width:31%;margin-right:2%;">
+
+  	<div class="panel panel-profile mt-10">
+	  <div class="panel-body" style="height:auto;">
+	    <div class="basic-profile" style="height:110px;padding:10px;">
+	      <%= display_image(user, :profile_picture) %>
+	      <div class="mb-20 text-color-gray">
+
+	        <div class="font-size-18 text-color-blue"><%=  link_to user.display_name, profile_path(username: user.username) %></div>
+
+	        <div class="font-size-14 text-color-gray"><%= user.display_designation %></div>
+
+	        <% if user.client %>
+	          <%= link_to user.client.name, admin_client_path(user.client), :class=>"font-size-14 text-color-red" %>
+	        <% end %>
+
+	        <% location = user.display_address %>
+	        <% unless location.blank? %>
+	          <div class="text-color-green font-size-11"><i class="fa fa-map-marker"></i> <%= location %> </div>
+	        <% end %>
+
+	      </div>
+	    </div>
+	  </div>
+
+	  <div class="panel-footer">
+	    <div class="row text-color-white clearfix font-size-12 p-5">
+	      <div class="col-sm-12 email"><i class="fa fa-envelope mr-20"> </i> <%= user.email ? user.email : "<not set>" %></div>
+	      <div class="col-sm-12 phone"><i class="fa fa-phone mr-20"> </i> <%= user.phone ? user.phone : "<not set>" %></div>
+	    </div>
+	    <div class="row text-color-white clearfix font-size-12 p-5">
+	      <div class="col-sm-12 skype"><i class="fa fa-skype mr-20"> </i> <%= user.skype ? user.skype : "<not set>" %></div>
+	      <div class="col-sm-12 linkedin"><i class="fa fa-linkedin mr-20"> </i> <%= user.linkedin ? user.linkedin : "<not set>" %></div>
+	    </div>
+	  </div>
+
+	</div>
+
+
+  </div>
+<% end %>
+
+<div class="cl-10"></div>
+
+<%= content_tag :div, :class=>"pull-right" do %>
+ <%= paginate @users, :remote => true %>
+<% end %>

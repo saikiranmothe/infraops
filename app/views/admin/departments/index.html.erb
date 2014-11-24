@@ -1,0 +1,41 @@
+
+<div class="cl-10 hidden-xs"></div>
+
+<%# Displays to Manage the items %>
+<div class="row mb-10">
+	<div class="font-size-22 col-sm-6 hidden-xs"><i class='fa fa-building fa-lg mr-10'></i>Manage Departments</div>
+	<div class="font-size-22 col-sm-6 text-align-center visible-xs"><i class='fa fa-building fa-lg mr-10'></i>Manage Departments</div>
+	<div id="div_client_filters" class="col-sm-6 hidden-xs">
+		<%= render :partial=>"filters" %>
+	</div>
+</div>
+
+<div class="cl-10 hidden-xs"></div>
+
+<%# Renders a partial to display all the departments %>
+<div class="row">
+	<div id="div_department_index" class="col-sm-6 hidden-xs">
+		<%= render :partial=>"index" %>
+	</div>
+	<div id="div_department_drop_down" class="col-xs-12 visible-xs">
+		<%= render :partial=>"drop_down" %>
+	</div>
+
+	<div id="div_department_details" class="col-xs-12 col-sm-6">
+		<% case	params[:action] %>
+		<% when "new", "edit", "show" %>
+			<%= render :partial=>params[:action] %>
+		<% when "index" %>
+			<% if @departments.empty? %>
+				<%= render :partial=>"summary" %>
+			<% else %>
+				<%= render :partial=>"show" %>
+			<% end %>
+		<% else %>
+			<%= render :partial=>"summary" %>
+		<% end %>
+	</div>
+
+</div>
+
+

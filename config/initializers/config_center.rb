@@ -32,6 +32,8 @@ module ConfigCenter
     PASSWORD_MIN_LEN = 7
     PASSWORD_MAX_LEN = 256
     PASSWORD_FORMAT_REG_EXP = /\A(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9!@$#&*_\.,;:])/
+    # PASSWORD_FORMAT_REG_EXP = /\A(?=.*?[a-z][A-Z])(?=.*?\d)(?=.*?[!@$&*_])/i
+
   end
 
   module Defaults
@@ -46,7 +48,7 @@ module ConfigCenter
     MAX_ITEMS_PER_LIST = 250
 
     # Default password to be assigned while mocking a user
-    PASSWORD = "Password1"
+    PASSWORD = "Password@1"
 
     # Other constans should follow here.
     EXCLUDED_JSON_ATTRIBUTES = []
@@ -73,14 +75,10 @@ module ConfigCenter
     PENDING = "pending"
     APPROVED = "approved"
     BLOCKED = "blocked"
+    STATUS_LIST = [PENDING, APPROVED, BLOCKED]
 
-    STATUS_LIST = {
-                   PENDING => "Account Pending",
-                   APPROVED => "Account Approved",
-                   BLOCKED => "Account Blocked"
-                  }
+    EXCLUDED_JSON_ATTRIBUTES = [:auth_token, :confirmation_token, :password_digest, :reset_password_token, :unlock_token, :status]
 
-    EXCLUDED_JSON_ATTRIBUTES = [:password_digest, :status]
   end
 
 

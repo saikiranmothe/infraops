@@ -1,0 +1,52 @@
+<%# Displays a detailed view of the user %>
+
+<%# Display Flash Message if any only in case of ajax request %>
+<% if request.xhr? %>
+  <%= render :partial=>"layouts/common/flash_message" %>
+<% end %>
+
+<div class="panel panel-profile">
+  <div class="panel-body" style="height:auto;">
+    <div class="basic-profile clearfix" style="height:auto;padding:10px;">
+
+      <%= link_to display_image(@user, :profile_picture),
+                  upload_image_link(@user, admin_user_path(@user), :profile_picture),
+                  :remote => true %>
+
+      <div class="mb-20 text-color-gray">
+
+        <div class="font-size-18 text-color-blue"><%= link_to @user.display_name, profile_path(username: @user.username) %></div>
+
+        <div class="font-size-14 text-color-gray"><%= @user.display_designation %></div>
+
+        <% location = @user.display_address %>
+        <% unless location.blank? %>
+          <div class="text-color-green font-size-11"><i class="fa fa-map-marker"></i> <%= location %> </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <div class="row text-color-white clearfix font-size-12 p-5">
+      <div class="col-sm-6 email"><i class="fa fa-envelope mr-20"> </i> <%= @user.email ? @user.email : "<not set>" %></div>
+      <div class="col-sm-6 phone"><i class="fa fa-phone mr-20"> </i> <%= @user.phone ? @user.phone : "<not set>" %></div>
+    </div>
+    <div class="row text-color-white clearfix font-size-12 p-5">
+      <div class="col-sm-6 skype"><i class="fa fa-skype mr-20"> </i> <%= @user.skype ? @user.skype : "<not set>" %></div>
+      <div class="col-sm-6 linkedin"><i class="fa fa-linkedin mr-20"> </i> <%= @user.linkedin ? @user.linkedin : "<not set>" %></div>
+    </div>
+  </div>
+</div>
+
+<div id="div_user_projects">
+  <%#= render :partial => "admin/users/projects/index", :locals=>{:user => @user} %>
+</div>
+
+<%= render :partial => "widgets/more_details", :locals=>{:data_model => @user,
+                      :edit_link => edit_admin_user_path(@user),
+                      :delete_link => admin_user_path(@user)} %>
+
+
+
+
