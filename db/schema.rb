@@ -11,21 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140402113213) do
+ActiveRecord::Schema.define(version: 20131112035558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "departments", force: true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "designations", force: true do |t|
-    t.string   "title"
-    t.text     "responsibilities"
+  create_table "aws_instance_types", force: true do |t|
+    t.string   "name",        limit: 56
+    t.string   "short_name",  limit: 16
+    t.string   "description", limit: 512
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -79,21 +73,46 @@ ActiveRecord::Schema.define(version: 20140402113213) do
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
+  create_table "operating_systems", force: true do |t|
+    t.string   "name",        limit: 56
+    t.string   "short_name",  limit: 16
+    t.string   "description", limit: 512
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "os_versions", force: true do |t|
+    t.string   "name",                limit: 56
+    t.string   "version",             limit: 8
+    t.string   "description",         limit: 512
+    t.integer  "operation_system_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.integer  "resource_id"
+    t.string   "resource_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
+  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "username",               limit: 32,                      null: false
     t.string   "email",                                                  null: false
-    t.text     "biography"
     t.string   "phone",                  limit: 16
     t.string   "status",                 limit: 16,  default: "pending", null: false
-    t.string   "skype",                  limit: 128
-    t.string   "linkedin",               limit: 128
     t.string   "city",                   limit: 128
     t.string   "state",                  limit: 128
     t.string   "country",                limit: 128
-    t.integer  "designation_id"
-    t.integer  "department_id"
-    t.string   "designation_overridden", limit: 56
+    t.string   "designation",            limit: 128
+    t.string   "organisation",           limit: 256
+    t.string   "about_me",               limit: 512
     t.string   "password_digest",                                        null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -121,5 +140,12 @@ ActiveRecord::Schema.define(version: 20140402113213) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
+
+  create_table "users_roles", id: false, force: true do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
+
+  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
 end

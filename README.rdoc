@@ -1,8 +1,8 @@
-== Q-Auth
+== InfraOps
 
-Q-Auth is an application for managing the users in an organisation. It has an admin module and an API which can be used by other services to addon functionalities.
+InfraOps is an application for managing the users in an organisation. It has an admin module and an API which can be used by other services to addon functionalities.
 
 * Uses rails methods like authenticate_with_http_token instead of popular methods like devise
-* q-auth-api uses warden for authentication. (This might change in future)
+* infraops-api uses warden for authentication. (This might change in future)
 * Uses a Global Configuration for named ConfigCenter
 

@@ -4,16 +4,15 @@ RAILS_ENV = ENV["RAILS_ENV"] || "development"
 
 namespace 'import' do
 
-  desc "Import Departments"
-  task 'departments' => :environment do
+  desc "Import AWS Instance Types"
+  task 'aws_instance_types' => :environment do
 
     if ["true", "t","1","yes","y"].include?(ENV["truncate_all"].to_s.downcase.strip)
-      Image::Base.where("imageable_type = 'Department'").destroy_all
-      Department.destroy_all
+      AwsInstanceType.destroy_all
     end
 
-    path = "db/import_data/#{RAILS_ENV}/departments.csv"
-    csv_table = CSV.table(path, {headers: true, converters: nil, header_converters: :symbol})
+    path = "db/import_data/#{RAILS_ENV}/aws_instance_types.csv"
+    csv_table = CSV.table(path, {headers: true, converters: nil, header_converters: :symbol, col_sep: "\t"})
     headers = csv_table.headers
     csv_table.each do |row|
 
@@ -21,40 +20,25 @@ namespace 'import' do
 
       next if row[:name].blank?
 
-      department = Department.find_by_name(row[:name]) || Department.new
-      department.name = row[:name]
-      department.description = row[:description]
-
-      # Adding a client picture
-      picture = nil
-      image_name = row[:image_name]
-      unless image_name.strip.blank?
-        image_path = "db/import_data/#{RAILS_ENV}/images/departments/#{image_name}"
-        if File.exists?(image_path)
-          picture = department.build_picture
-          picture.image = File.open(image_path)
-        end
-      end
-
-      if department.valid? && (picture.blank? || picture.valid?)
-        puts "#{department.name} saved".green if department.save!
-      else
-        puts "Error! #{department.errors.full_messages.to_sentence}".red
-      end
+      aws_instance_type = AwsInstanceType.find_by_name(row[:name]) || AwsInstanceType.new
+      aws_instance_type.name = row[:name]
+      aws_instance_type.short_name = row[:short_name]
+      aws_instance_type.description = row[:description]
+      aws_instance_type.save
 
     end
   end
 
-  desc "Import Designations"
-  task 'designations' => :environment do
+  desc "Import Operating Systems"
+  task 'operating_systems' => :environment do
 
     if ["true", "t","1","yes","y"].include?(ENV["truncate_all"].to_s.downcase.strip)
-      Image::Base.where("imageable_type = 'Designation'").destroy_all
-      Designation.destroy_all
+      Image::Base.where("imageable_type = 'OperatingSystem'").destroy_all
+      OperatingSystem.destroy_all
     end
 
-    path = "db/import_data/#{RAILS_ENV}/designations.csv"
-    csv_table = CSV.table(path, {headers: true, converters: nil, header_converters: :symbol})
+    path = "db/import_data/#{RAILS_ENV}/operating_systems.csv"
+    csv_table = CSV.table(path, {headers: true, converters: nil, header_converters: :symbol, col_sep: "\t"})
     headers = csv_table.headers
     csv_table.each do |row|
 
@@ -62,25 +46,70 @@ namespace 'import' do
 
       next if row[:title].blank?
 
-      designation = Designation.find_by_title(row[:title]) || Designation.new
-      designation.title = row[:title]
-      designation.responsibilities = row[:responsibilities]
+      os = OperatingSystem.find_by_title(row[:title]) || OperatingSystem.new
+      os.name = row[:name]
+      os.short_name = row[:short_name]
+      os.description = row[:description]
 
       # Adding a client picture
       picture = nil
       image_name = row[:image_name]
       unless image_name.strip.blank?
-        image_path = "db/import_data/#{RAILS_ENV}/images/designations/#{image_name}"
+        image_path = "db/import_data/#{RAILS_ENV}/images/operating_systems/#{image_name}"
         if File.exists?(image_path)
-          picture = designation.build_picture
+          picture = os.build_picture
           picture.image = File.open(image_path)
         end
       end
 
-      if designation.valid? && (picture.blank? || picture.valid?)
-        puts "#{designation.title} saved".green if designation.save!
+      if os.valid? && (picture.blank? || picture.valid?)
+        puts "#{os.title} saved".green if os.save!
       else
-        puts "Error! #{designation.errors.full_messages.to_sentence}".red
+        puts "Error! #{os.errors.full_messages.to_sentence}".red
+      end
+
+    end
+  end
+
+  desc "Import OS Versions"
+  task 'os_versions' => :environment do
+
+    if ["true", "t","1","yes","y"].include?(ENV["truncate_all"].to_s.downcase.strip)
+      OsVersion.destroy_all
+    end
+
+    path = "db/import_data/#{RAILS_ENV}/os_versions.csv"
+    csv_table = CSV.table(path, {headers: true, converters: nil, header_converters: :symbol, col_sep: "\t"})
+    headers = csv_table.headers
+    csv_table.each do |row|
+
+      row.headers.each{ |cell| row[cell] = row[cell].to_s.strip }
+
+      next if row[:title].blank?
+
+      osv = OsVersion.find_by_title(row[:title]) || OsVersion.new
+      osv.name = row[:name]
+      osv.version = row[:version]
+      osv.description = row[:description]
+
+      os = OsVersion.find_by_short_name(row[:os_short_name])
+      osv.operating_system = os
+
+      # Adding a picture
+      picture = nil
+      image_name = row[:image_name]
+      unless image_name.strip.blank?
+        image_path = "db/import_data/#{RAILS_ENV}/images/os_versions/#{image_name}"
+        if File.exists?(image_path)
+          picture = osv.build_picture
+          picture.image = File.open(image_path)
+        end
+      end
+
+      if osv.valid? && (picture.blank? || picture.valid?)
+        puts "#{osv.title} saved".green if osv.save!
+      else
+        puts "Error! #{osv.errors.full_messages.to_sentence}".red
       end
 
     end
@@ -95,7 +124,7 @@ namespace 'import' do
     end
 
     path = "db/import_data/#{RAILS_ENV}/users.csv"
-    csv_table = CSV.table(path, {headers: true, converters: nil, header_converters: :symbol})
+    csv_table = CSV.table(path, {headers: true, converters: nil, header_converters: :symbol, col_sep: "\t"})
     headers = csv_table.headers
 
     csv_table.each do |row|
@@ -109,20 +138,15 @@ namespace 'import' do
       user.username = row[:username]
       user.email = row[:email]
       user.phone = row[:phone]
-      user.skype = row[:skype]
-      user.linkedin = row[:linkedin]
+      user.designation = row[:designation]
+      user.organisation = row[:organisation]
+      user.about_me = row[:about_me]
       user.city = row[:city]
       user.state = row[:state]
       user.country = row[:country]
       user.user_type = row[:user_type]
       user.password = ConfigCenter::Defaults::PASSWORD
       user.password_confirmation = ConfigCenter::Defaults::PASSWORD
-
-      designation = Designation.find_by_title(row[:designation])
-      user.designation = designation
-
-      department = Department.find_by_name(row[:department])
-      user.department = department
 
       ## Adding a profile picture
       image_name = row[:image_name]
@@ -149,7 +173,7 @@ namespace 'import' do
   desc "Import all data in sequence"
   task 'all' => :environment do
 
-    import_list = ["departments", "designations", "users"]
+    import_list = ["aws_instance_types", "operating_systems", "os_versions", "users"]
 
     import_list.each do |item|
       puts "Importing #{item.titleize}".yellow

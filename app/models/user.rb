@@ -40,8 +40,6 @@ class User < ActiveRecord::Base
   before_create :generate_auth_token, :assign_default_password_if_nil
 
   # Associations
-  belongs_to :designation
-  belongs_to :department
   has_one :profile_picture, :as => :imageable, :dependent => :destroy, :class_name => "Image::ProfilePicture"
 
   state_machine :status, :initial => :pending do
@@ -138,7 +136,7 @@ class User < ActiveRecord::Base
     address_list.join(", ")
   end
 
-  # * Return true if the user is either a Q-Auth Super Admin or Q-Auth Admin
+  # * Return true if the user is either a InfraOps Super Admin or InfraOps Admin
   # == Examples
   #   >>> user.is_admin?
   #   => true
@@ -146,7 +144,7 @@ class User < ActiveRecord::Base
     user_type == 'admin'
   end
 
-  # * Return true if the user is either a Q-Auth Admin
+  # * Return true if the user is either a InfraOps Admin
   # == Examples
   #   >>> user.is_super_admin?
   #   => true

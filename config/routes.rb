@@ -1,4 +1,4 @@
-QAuth::Application.routes.draw do
+InfraOps::Application.routes.draw do
 
 
   ## ----------

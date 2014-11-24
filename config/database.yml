@@ -2,7 +2,7 @@ development:
   adapter: postgresql
   encoding: unicode
   reconnect: false
-  database: q_auth_development
+  database: infraops_development
   pool: 5
   username: kvarma
   host: localhost
@@ -12,7 +12,7 @@ test:
   adapter: postgresql
   encoding: unicode
   reconnect: false
-  database: q_auth_test_<%= ENV['TEST_ENV_NUMBER'] %>
+  database: infraops_test_<%= ENV['TEST_ENV_NUMBER'] %>
   pool: 5
   username: kvarma
   host: localhost

@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-QAuth::Application.load_tasks
+InfraOps::Application.load_tasks

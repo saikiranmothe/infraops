@@ -7,22 +7,16 @@ class CreateUsers < ActiveRecord::Migration
       t.string :username, :null => false, :limit=>32
       t.string :email, :null => false
 
-      t.text :biography
-
       t.string :phone, :null => true, :limit=>16
       t.string :status, :null => false, :default=>"pending", :limit=>16
-
-      t.string :skype, :null => true, :limit=>128
-      t.string :linkedin, :null => true, :limit=>128
 
       t.string :city, :null => true, :limit=>128
       t.string :state, :null => true, :limit=>128
       t.string :country, :null => true, :limit=>128
 
-      t.integer :designation_id, :null => true, index: true
-      t.integer :department_id, :null => true, index: true
-
-      t.string :designation_overridden, :null => true, :limit=>56
+      t.string :designation, :null => true, :limit=>128
+      t.string :organisation, :null => true, :limit=>256
+      t.string :about_me, :null => true, :limit=>512
 
       ## Password Digest
       t.string :password_digest, :null => false
@@ -54,7 +48,6 @@ class CreateUsers < ActiveRecord::Migration
 
       ## Token authenticatable
       t.string :auth_token
-
       t.string :user_type
 
       t.timestamps

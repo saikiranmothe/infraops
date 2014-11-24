@@ -59,11 +59,11 @@ module ConfigCenter
       when "development"
         'http://localhost:3000'
       when "it"
-        'http://it.q-auth.qwinixtech.com'
+        'http://it.infraops.qwinixtech.com'
       when "uat"
-        'http://uat.q-auth.qwinixtech.com'
+        'http://uat.infraops.qwinixtech.com'
       when "production"
-        'http://q-auth.qwinixtech.com'
+        'http://infraops.qwinixtech.com'
       else
         'http://localhost:3000'
       end
