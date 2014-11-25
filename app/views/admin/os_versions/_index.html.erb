@@ -1,0 +1,43 @@
+<div class="panel panel-archon mt-10">
+  <div class="panel-heading">
+    <h3 class="panel-title">Manage Versions
+      <span class="pull-right">
+        <!-- <a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a> -->
+        <%= link_to raw("<i class=\"fa fa-plus mr-5\"></i> Add a Version"), new_admin_os_version_path(os_id: os.id),
+                :class=>"btn btn-primary btn-xs pull-right",
+                :style => "width:auto; color: white;height:auto;padding:5px;",
+                :remote=>true %>
+      </span>
+    </h3>
+
+  </div>
+  <div class="panel-body clearfix">
+
+    <table class="table table-condensed table-hover table-striped mt-20">
+      <thead>
+        <tr>
+          <th style="width:60%;">Name</th>
+          <th style="width:10%;text-align:center;">Version</th>
+          <th style="width:30%;text-align:center;">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% os.versions.each do |version| %>
+          <tr class="text-color-gray">
+            <td><%= version.name %></td>
+            <td class="bold"><%= version.version %></td>
+            <td>
+              <%= link_to raw("<i class=\"icon-pencil icon-white mr-5\"></i> Edit"), edit_admin_os_version_path(id: version.id, os_id: os.id),
+                :class=>"btn btn-default btn-xs pull-right ml-10", :remote=>true %>
+              <%= link_to raw("<i class=\"icon-remove \"></i> Delete"), admin_os_version_path(id: version.id, os_id: os.id),
+                method: :delete, data: { confirm: 'Are you sure?' }, :class=>"btn btn-danger btn-xs pull-right", :remote=>true %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+
+  </div>
+  <!-- <div class="panel-footer clearfix"></div> -->
+</div>

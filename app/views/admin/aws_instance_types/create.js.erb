@@ -1,0 +1,25 @@
+<% if @aws_instance_type.errors.blank? %>
+
+	// Fill the right box with first aws_instance_type details
+	$('#div_aws_instance_type_details').html("<%= escape_javascript(render(:partial=>'show')) %>");
+
+	// Add the newly created item to the list
+  $("#div_aws_instance_type_collections").prepend("<div id=\"div_aws_instance_type_<%= @aws_instance_type.id %>\"><%= escape_javascript(render(:partial => 'item', :locals => { :aws_instance_type => @aws_instance_type })) %></div>")
+  $("#div_aws_instance_type_empty").hide();
+
+  // Close Modal
+  closeModal();
+
+<% else %>
+
+  // Show the new form in the pop up form.
+  heading = "Create AwsInstanceType";
+  bodyContent = "<%= escape_javascript(render(:partial=>"form")) %>";
+  showModal(heading, bodyContent);
+  validateAwsInstanceTypeForm();
+
+  // Populate Server Side Errors
+  errorMessages = <%= @aws_instance_type.errors.full_messages.to_json.html_safe %>;
+  populateServerSideErrors('aws_instance_type', errorMessages);
+
+<% end %>

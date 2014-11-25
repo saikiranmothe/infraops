@@ -1,0 +1,31 @@
+
+<%# Displays a detailed view of the operating_system %>
+<%# Display Flash Message if any only in case of ajax request %>
+<% if request.xhr? %>
+	<%= render :partial=>"layouts/common/flash_message" %>
+<% end %>
+
+<div class="panel panel-profile">
+  <div class="panel-body" style="height:auto;">
+    <div class="basic-profile" style="height:auto;padding:10px;">
+      <div class="row">
+        <%= link_to display_image(@operating_system, :picture),
+                    upload_image_link(@operating_system, admin_operating_system_path(@operating_system), :picture),
+                    :remote => true, class: "col-sm-2" %>
+        <div class="col-sm-10 mb-20 text-color-gray">
+          <div class="fs-18 text-color-blue"><%= @operating_system.name %></div>
+          <div class="fs-12 text-color-gray"> <%= @operating_system.description %></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="div_os_versions">
+  <%= render :partial => "admin/os_versions/index", :locals=>{:os => @operating_system} %>
+</div>
+
+<%= render :partial => "widgets/more_details", :locals=>{:data_model => @operating_system,
+                      :edit_link => edit_admin_operating_system_path(@operating_system),
+                      :delete_link => admin_operating_system_path(@operating_system)} %>

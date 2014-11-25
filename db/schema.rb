@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20131112035558) do
     t.string   "name",                limit: 56
     t.string   "version",             limit: 8
     t.string   "description",         limit: 512
-    t.integer  "operation_system_id"
+    t.integer  "operating_system_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

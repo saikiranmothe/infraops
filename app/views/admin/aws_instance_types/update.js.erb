@@ -1,0 +1,24 @@
+<% if @aws_instance_type.errors.blank? %>
+
+	// Fill the right box with first item details
+  $('#div_aws_instance_type_details').html("<%= escape_javascript(render(:partial=>"show")) %>");
+
+	// Refresh the updated item in the list
+  $("#div_aws_instance_type_<%= @aws_instance_type.id %>").html("<%= escape_javascript(render :partial => 'item', :locals => { :aws_instance_type => @aws_instance_type }) %>")
+
+  // Close Modal
+  closeModal();
+
+<% else %>
+
+  // Show the new form in the pop up form.
+  heading = "Edit AwsInstanceType";
+  bodyContent = "<%= escape_javascript(render(:partial=>"form")) %>";
+  showModal(heading, bodyContent);
+  validateAwsInstanceTypeForm();
+
+  // Populate Server Side Errors
+  errorMessages = <%= @aws_instance_type.errors.full_messages.to_json.html_safe %>;
+  populateServerSideErrors('aws_instance_type', errorMessages);
+
+<% end %>

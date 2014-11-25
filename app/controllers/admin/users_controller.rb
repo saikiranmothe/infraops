@@ -60,7 +60,7 @@ class Admin::UsersController < Admin::BaseController
   # POST /users.json
   def create
     ## Creating the user object
-    @user = User.new(params[:user].permit(:name, :username, :email, :phone, :designation_overridden, :linkedin, :skype, :department_id, :designation_id))
+    @user = User.new(user_params)
     @user.password = ConfigCenter::Defaults::PASSWORD
     @user.password_confirmation = ConfigCenter::Defaults::PASSWORD
 
@@ -103,7 +103,7 @@ class Admin::UsersController < Admin::BaseController
     @user = User.find(params[:id])
 
     ## Updating the @user object with params
-    @user.assign_attributes(params[:user].permit(:name, :username, :email, :phone, :designation_overridden, :linkedin, :skype, :department_id, :designation_id))
+    @user.assign_attributes(user_params)
 
     ## Validating the data
     @user.valid?
@@ -173,6 +173,10 @@ class Admin::UsersController < Admin::BaseController
 
   def set_navs
     set_nav("admin/users")
+  end
+
+  def user_params
+    params[:user].permit(:name, :username, :email, :phone, :designation, :organisation)
   end
 
   def get_collections

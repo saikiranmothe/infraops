@@ -44,17 +44,10 @@ InfraOps::Application.routes.draw do
       get :change_status, on: :member
     end
 
-    resources :projects do
-      get :change_status, on: :member
-      resources :roles, :only=>[:new, :create, :destroy]
-      resources :project_links
-    end
-
-    resources :clients
-    resources :link_types
     resources :images
-    resources :departments
-    resources :designations
+    resources :aws_instance_types
+    resources :operating_systems
+    resources :os_versions
 
   end
 
@@ -71,9 +64,6 @@ InfraOps::Application.routes.draw do
   # User Pages for teams and user profiles
   get   '/team',               to: "user/team#index",   as:  :team
   get   '/profiles/:username',  to: "user/team#show",    as:  :profile
-
-  # User Pages for projects
-  get   '/projects/:pretty_url/dashboard',   to: "user/projects#show",   as:  :project_dashboard
 
   ## ----------
   ## APIs

@@ -5,8 +5,8 @@
       <%= display_image(user, :profile_picture, "50px") %>
    	</div>
    	<div class="pull-left" style="width:75%;">
-   		<%= link_to user.display_name, admin_user_path(user), :remote=>true, :class=>"text-color-blue font-size-14" %>
-		  <div class="text-color-gray font-size-12"><%= user.display_designation %></div>
+   		<%= link_to user.display_name, admin_user_path(user), :remote=>true, :class=>"text-color-blue fs-14" %>
+		  <div class="text-color-gray fs-12"><%= user.designation %> at <%= user.organisation %></div>
     </div>
 
 </div>

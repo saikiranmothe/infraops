@@ -1,0 +1,12 @@
+<div class="btn-group mt-10 mb-10" style="width:100%;">
+  <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown">
+    Choose a OperatingSystem <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <% @operating_systems.each do |operating_system| %>
+      <li><%= link_to operating_system.name, admin_operating_system_path(operating_system), :remote=>true %></li>
+    <% end %>
+    <%= content_tag :li, link_to_next_page(@operating_systems, 'Next Page', :remote => true) %>
+    <%= content_tag :li, link_to_previous_page(@operating_systems, 'Previous Page', :remote => true) %>
+  </ul>
+</div>

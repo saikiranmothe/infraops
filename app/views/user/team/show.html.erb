@@ -28,15 +28,15 @@
 		</div>
 		<div class="col-md-9">
 			<h1 class="name"><%= @user.display_name %></h2>
-			<div class="font-size-16 text-color-gray"><%= @user.display_designation %></div>
+			<div class="fs-16 text-color-gray"><%= @user.display_designation %></div>
 
 	        <% if @user.client %>
-	          <%= link_to @user.client.name, admin_client_path(@user.client), :class=>"font-size-16 text-color-red" %>
+	          <%= link_to @user.client.name, admin_client_path(@user.client), :class=>"fs-16 text-color-red" %>
 	        <% end %>
 
 	        <% location = @user.display_address %>
 	        <% unless location.blank? %>
-	          <div class="text-color-green font-size-13"><i class="fa fa-map-marker"></i> <%= location %> </div>
+	          <div class="text-color-green fs-13"><i class="fa fa-map-marker"></i> <%= location %> </div>
 	        <% end %>
 
 			<ul class="options list-inline mt-10">

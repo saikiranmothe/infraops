@@ -1,7 +1,7 @@
 <div class="sidebar">
 	<div class="wrapper">
 
-		<%= link_to image_tag("/assets/logo.png", alt: "InfraOps Logo"), root_path, class: "logo" %>
+		<%= link_to image_tag("/assets/logo.png", alt: "InfraOps Logo", style: "width: 240px;margin: 20px 0px;"), root_path, class: "logo" %>
 
 		<ul class="nav  nav-list">
 
@@ -31,12 +31,12 @@
 					<%= link_to raw("<i class=\"fa fa-group\"></i> Manage Users"), admin_users_path %>
 				</li>
 
-				<li class="<%= nav_class("admin/departments") %>">
-					<%= link_to raw("<i class=\"fa fa-building\"></i> Manage Departments"), admin_departments_path %>
+				<li class="<%= nav_class("admin/aws_instance_types") %>">
+					<%= link_to raw("<i class=\"fa fa-building\"></i> Manage AWS Instance Types"), admin_aws_instance_types_path %>
 				</li>
 
-				<li class="<%= nav_class("admin/designations") %>">
-					<%= link_to raw("<i class=\"fa fa-user-md\"></i> Manage Designations"), admin_designations_path %>
+				<li class="<%= nav_class("admin/operating_systems") %>">
+					<%= link_to raw("<i class=\"fa fa-user-md\"></i> Manage Operating Systems"), admin_operating_systems_path %>
 				</li>
 
 			<% end %>

@@ -44,9 +44,9 @@ namespace 'import' do
 
       row.headers.each{ |cell| row[cell] = row[cell].to_s.strip }
 
-      next if row[:title].blank?
+      next if row[:name].blank?
 
-      os = OperatingSystem.find_by_title(row[:title]) || OperatingSystem.new
+      os = OperatingSystem.find_by_name(row[:name]) || OperatingSystem.new
       os.name = row[:name]
       os.short_name = row[:short_name]
       os.description = row[:description]
@@ -63,7 +63,7 @@ namespace 'import' do
       end
 
       if os.valid? && (picture.blank? || picture.valid?)
-        puts "#{os.title} saved".green if os.save!
+        puts "#{os.name} saved".green if os.save!
       else
         puts "Error! #{os.errors.full_messages.to_sentence}".red
       end
@@ -85,29 +85,21 @@ namespace 'import' do
 
       row.headers.each{ |cell| row[cell] = row[cell].to_s.strip }
 
-      next if row[:title].blank?
+      next if row[:name].blank?
 
-      osv = OsVersion.find_by_title(row[:title]) || OsVersion.new
+      osv = OsVersion.find_by_name(row[:name]) || OsVersion.new
       osv.name = row[:name]
       osv.version = row[:version]
       osv.description = row[:description]
 
-      os = OsVersion.find_by_short_name(row[:os_short_name])
+      os = OperatingSystem.find_by_short_name(row[:os_short_name])
       osv.operating_system = os
 
-      # Adding a picture
-      picture = nil
-      image_name = row[:image_name]
-      unless image_name.strip.blank?
-        image_path = "db/import_data/#{RAILS_ENV}/images/os_versions/#{image_name}"
-        if File.exists?(image_path)
-          picture = osv.build_picture
-          picture.image = File.open(image_path)
-        end
-      end
+      puts "#{row[:os_short_name]}".red
+      puts "#{os}".yellow
 
-      if osv.valid? && (picture.blank? || picture.valid?)
-        puts "#{osv.title} saved".green if osv.save!
+      if osv.valid?
+        puts "#{osv.name} saved".green if osv.save!
       else
         puts "Error! #{osv.errors.full_messages.to_sentence}".red
       end

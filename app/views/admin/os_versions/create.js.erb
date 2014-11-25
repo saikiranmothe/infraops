@@ -1,0 +1,21 @@
+<% if @os_version.errors.blank? %>
+
+	// Fill the right box with first os_version details
+	$('#div_os_versions').html("<%= escape_javascript(render(:partial=>'admin/os_versions/index', :locals=>{:os => @os})) %>");
+
+	// Close Modal
+  closeModal();
+
+<% else %>
+
+  // Show the new form in the pop up form.
+  heading = "Create a Version";
+  bodyContent = "<%= escape_javascript(render(:partial=>"form")) %>";
+  showModal(heading, bodyContent);
+  validateOsVersionForm();
+
+  // Populate Server Side Errors
+  errorMessages = <%= @os_version.errors.full_messages.to_json.html_safe %>;
+  populateServerSideErrors('os_version', errorMessages);
+
+<% end %>

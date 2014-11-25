@@ -1,0 +1,25 @@
+<% if @operating_system.errors.blank? %>
+
+	// Fill the right box with first operating_system details
+	$('#div_operating_system_details').html("<%= escape_javascript(render(:partial=>'show')) %>");
+
+	// Add the newly created item to the list
+  $("#div_operating_system_collections").prepend("<div id=\"div_operating_system_<%= @operating_system.id %>\"><%= escape_javascript(render(:partial => 'item', :locals => { :operating_system => @operating_system })) %></div>")
+  $("#div_operating_system_empty").hide();
+
+  // Close Modal
+  closeModal();
+
+<% else %>
+
+  // Show the new form in the pop up form.
+  heading = "Create OperatingSystem";
+  bodyContent = "<%= escape_javascript(render(:partial=>"form")) %>";
+  showModal(heading, bodyContent);
+  validateOperatingSystemForm();
+
+  // Populate Server Side Errors
+  errorMessages = <%= @operating_system.errors.full_messages.to_json.html_safe %>;
+  populateServerSideErrors('operating_system', errorMessages);
+
+<% end %>

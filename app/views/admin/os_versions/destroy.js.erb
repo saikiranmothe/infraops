@@ -1,0 +1,3 @@
+// Fill the right box with os_version details
+$('#div_os_versions').html("<%= escape_javascript(render(:partial=>'admin/os_versions/index', :locals=>{:os => @os})) %>");
+

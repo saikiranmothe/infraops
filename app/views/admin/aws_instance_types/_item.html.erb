@@ -1,0 +1,14 @@
+<%# describes about each aws_instance_type %>
+<div class="web-stats info clearfix" style="margin-bottom:5px;padding:5px;height:auto;">
+
+    <div class="visible-md visible-lg pull-left mr-10" style="width:15%;">
+      <%#= display_image(aws_instance_type, :picture, "50px") %>
+    </div>
+    <div class="pull-left" style="width:80%;">
+      <%= link_to aws_instance_type.name, admin_aws_instance_type_path(aws_instance_type), :remote=>true, :class=>"text-color-blue fs-14" %>
+      <div class="text-color-gray fs-11"> <%= scrap_word(aws_instance_type.description, 120) %></div>
+    </div>
+
+</div>
+
+

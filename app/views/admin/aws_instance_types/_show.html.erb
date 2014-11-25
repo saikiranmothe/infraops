@@ -1,0 +1,29 @@
+
+<%# Displays a detailed view of the aws_instance_type %>
+<%# Display Flash Message if any only in case of ajax request %>
+<% if request.xhr? %>
+  <%= render :partial=>"layouts/common/flash_message" %>
+<% end %>
+
+<!-- <div class="panel panel-profile">
+  <div class="panel-body" style="height:auto;">
+    <div class="basic-profile" style="height:auto;padding:10px;">
+      <%#= link_to display_image(@aws_instance_type, :picture),
+                  upload_image_link(@aws_instance_type, admin_aws_instance_type_path(@aws_instance_type), :picture),
+                  :remote => true %>
+      <div class="pull-left mb-20 text-color-gray">
+        <div class="fs-18 text-color-blue"><%#= @aws_instance_type.name %></div>
+        <div class="fs-12 text-color-gray"> <%#= @aws_instance_type.description %></div>
+      </div>
+      <div class="cl"></div>
+    </div>
+
+  </div>
+</div> -->
+
+
+<%= render :partial => "widgets/more_details", :locals=>{
+        :heading => @aws_instance_type.name,
+        :data_model => @aws_instance_type,
+        :edit_link => edit_admin_aws_instance_type_path(@aws_instance_type),
+        :delete_link => admin_aws_instance_type_path(@aws_instance_type)} %>

@@ -5,7 +5,7 @@ class OperatingSystem < ActiveRecord::Base
   validates :short_name, presence: true
 
   # Associations
-  has_many :versions
+  has_many :versions, class_name: "OsVersion"
   has_one :picture, :as => :imageable, :dependent => :destroy, :class_name => "Image::DepartmentPicture"
 
   # return an active record relation object with the search query in its where clause

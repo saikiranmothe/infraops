@@ -1,0 +1,51 @@
+
+<%# Renders a partial which is used to create a new os_version %>
+
+<%= form_for([:admin, @os_version], :html => {:id=>"form_os_version", :class=>"mb-0 form-horizontal", :role => "form", :method => (@os_version.new_record? ? :post : :put), :remote=>true}) do |f| %>
+
+  <div class="modal-body">
+
+    <%= @os_version.errors[:base].to_sentence %>
+
+    <%= hidden_field_tag :os_id, @os.id if @os.id %>
+
+    <div class="form-inputs">
+
+      <!-- Name (string) -->
+      <%= render :partial=>"layouts/common/form_field", :locals=>{:object=>@os_version,
+                                              :object_name=>'os_version',
+                                              :field_name=>'name',
+                                              :display_name=>'Name',
+                                              :field_type=>'string',
+                                              :input_type=>'text',
+                                              :required=>true,
+                                              :place_holder=>"e.g: Karmic Koala"} %>
+
+      <!-- Short Name (string) -->
+      <%= render :partial=>"layouts/common/form_field", :locals=>{:object=>@os_version,
+                                              :object_name=>'os_version',
+                                              :field_name=>'version',
+                                              :display_name=>'Version',
+                                              :field_type=>'string',
+                                              :input_type=>'text',
+                                              :required=>true,
+                                              :place_holder=>"e.g: 11.01"} %>
+
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+
+    <div class="pull-right">
+      <% button_text = "#{@os_version.new_record? ? "Create" : "Update"} Item" %>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      <%= submit_tag button_text, "data-reset-text"=>button_text, "data-loading-text"=>"Saving ...", :class=>"btn btn-primary ml-10" %>
+    </div>
+
+  </div>
+
+	<div class="cl-10"></div>
+
+<% end %>
+

@@ -111,19 +111,6 @@ class User < ActiveRecord::Base
     "#{name}"
   end
 
-  # * Return the designation text
-  # If the user has overridden the designation it will return that, else it will populate the display from the associated designation and department
-  # == Examples
-  #   >>> user.display_designation
-  #   => "Joe Black"
-  def display_designation
-    return "#{designation_overridden}" if designation_overridden
-    designation_list = []
-    designation_list << designation.title unless designation.blank?
-    designation_list << department.name unless department.blank?
-    designation_list.join(", ")
-  end
-
   # * Return address which includes city, state & country
   # == Examples
   #   >>> user.display_address

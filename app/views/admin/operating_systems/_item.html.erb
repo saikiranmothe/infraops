@@ -1,0 +1,14 @@
+<%# describes about each operating_system %>
+<div class="web-stats info clearfix" style="margin-bottom:5px;padding:5px;height:auto;">
+
+    <div class="visible-md visible-lg pull-left mr-10" style="width:15%;">
+      <%= display_image(operating_system, :picture, "50px") %>
+    </div>
+    <div class="pull-left" style="width:80%;">
+      <%= link_to operating_system.name, admin_operating_system_path(operating_system), :remote=>true, :class=>"text-color-blue fs-14" %>
+      <div class="text-color-gray fs-11"> <%= scrap_word(operating_system.description, 120) %></div>
+    </div>
+
+</div>
+
+

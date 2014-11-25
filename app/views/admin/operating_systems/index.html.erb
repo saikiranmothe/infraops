@@ -1,0 +1,41 @@
+
+<div class="cl-10 hidden-xs"></div>
+
+<%# Displays to Manage the items %>
+<div class="row mb-10">
+	<div class="fs-22 col-sm-6 hidden-xs"><i class='fa fa-user-md fa-lg mr-10'></i>Manage Operating Systems</div>
+	<div class="fs-22 col-sm-6 text-align-center visible-xs"><i class='fa fa-building fa-lg mr-10'></i>Manage Operating Systems</div>
+	<div id="div_client_filters" class="col-sm-6 hidden-xs">
+		<%= render :partial=>"filters" %>
+	</div>
+</div>
+
+<div class="cl-10 hidden-xs"></div>
+
+<%# Renders a partial to display all the operating_systems %>
+<div class="row">
+	<div id="div_operating_system_index" class="col-sm-6 hidden-xs">
+		<%= render :partial=>"index" %>
+	</div>
+	<div id="div_operating_system_drop_down" class="col-xs-12 visible-xs">
+		<%= render :partial=>"drop_down" %>
+	</div>
+
+	<div id="div_operating_system_details" class="col-xs-12 col-sm-6">
+		<% case	params[:action] %>
+		<% when "new", "edit", "show" %>
+			<%= render :partial=>params[:action] %>
+		<% when "index" %>
+			<% if @operating_systems.empty? %>
+				<%= render :partial=>"summary" %>
+			<% else %>
+				<%= render :partial=>"show" %>
+			<% end %>
+		<% else %>
+			<%= render :partial=>"summary" %>
+		<% end %>
+	</div>
+
+</div>
+
+

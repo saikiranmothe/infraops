@@ -1,0 +1,63 @@
+
+<%# Renders a partial which is used to create a new aws_instance_type %>
+
+<%= form_for([:admin, @aws_instance_type], :html => {:id=>"form_aws_instance_type", :class=>"mb-0 form-horizontal", :role => "form", :method => (@aws_instance_type.new_record? ? :post : :put), :remote=>true}) do |f| %>
+
+  <div class="modal-body">
+
+    <%= @aws_instance_type.errors[:base].to_sentence %>
+
+    <%= hidden_field_tag :faction, @aws_instance_type.new_record? ? admin_aws_instance_types_path : admin_aws_instance_types_path(@aws_instance_type) %>
+    <%= hidden_field_tag :fmethod, @aws_instance_type.new_record? ? "POST" : "PUT" %>
+
+    <div class="form-inputs">
+
+
+      <!-- Name (string) -->
+      <%= render :partial=>"/layouts/common/form_field", :locals=>{:object=>@aws_instance_type,
+                                              :object_name=>'aws_instance_type',
+                                              :field_name=>'name',
+                                              :display_name=>'Name',
+                                              :field_type=>'string',
+                                              :input_type=>'text',
+                                              :required=>true,
+                                              :place_holder=>"T1 Micro"} %>
+
+      <!-- Short Name (string) -->
+      <%= render :partial=>"/layouts/common/form_field", :locals=>{:object=>@aws_instance_type,
+                                              :object_name=>'aws_instance_type',
+                                              :field_name=>'short_name',
+                                              :display_name=>'Short Name',
+                                              :field_type=>'string',
+                                              :input_type=>'text',
+                                              :required=>true,
+                                              :place_holder=>"e.g: t1.micro"} %>
+
+      <!-- Description (text) -->
+      <%= render :partial=>"/layouts/common/form_field", :locals=>{:object=>@aws_instance_type,
+                                              :object_name=>'aws_instance_type',
+                                              :field_name=>'description',
+                                              :display_name=>'Description',
+                                              :field_type=>'text',
+                                              :input_type=>'textarea',
+                                              :required=>false,
+                                              :place_holder=>"Give a short description about the AWS Instance Type"} %>
+
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+
+    <div class="pull-right">
+      <% button_text = "#{@aws_instance_type.new_record? ? "Create" : "Update"} Item" %>
+      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      <%= submit_tag button_text, "data-reset-text"=>button_text, "data-loading-text"=>"Saving ...", :class=>"btn btn-primary ml-10" %>
+    </div>
+
+  </div>
+
+	<div class="cl-10"></div>
+
+<% end %>
+
